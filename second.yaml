@@ -1,0 +1,32 @@
+--- # My second playbook
+ - hosts: boa
+   become: yes
+   tasks:
+   - name: Installing Apache on Nodes
+     yum:
+       name: httpd
+       state: present
+   - name: Staring the Apache service
+     service:
+       name: httpd
+       state: restarted
+   - name: Creating the index.html
+     file:
+       name: index.html
+       dest: /var/www/html
+       state: touch
+   - name: Copying content to index.html
+     copy:
+       content: "Welcome to website"
+       dest: /var/www/html/index.html
+   - name : Enable firewall for httpd service
+     firewalld:
+       port: 80/tcp
+       state: enabled
+   - name: Refreshing firewall
+     service:
+       service: firewalld
+       state: restarted
+       
+       
+       
