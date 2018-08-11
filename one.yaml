@@ -1,0 +1,13 @@
+--- # My first playbook
+ - hosts: boa
+   become: yes
+   tasks:
+   - name: Installing Apache on Nodes
+     yum:
+       name: httpd
+       state: present
+   - name: Staring the Apache service
+     service:
+       name: httpd
+       state: restarted 
+
